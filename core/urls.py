@@ -25,7 +25,8 @@ urlpatterns = [
     path('reciepes/',reciepes),
     path('delete_rec/<id>/', delete_rec),
     path('update_recipe/<id>', update_recipe),
-    path('login/', login),
+    path('login_page/', login_page),
     path('register/', register),
+    path('logout_page/',logout_page),
     path('admin/', admin.site.urls),
 ]
