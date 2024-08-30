@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from .models import *
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 def reciepes(request):
     if request.method == "POST":
@@ -49,3 +50,25 @@ def update_recipe(request,id):
     # If not a POST request, render the form with current data
     context = {'recipe': queryset}
     return render(request, 'update_recipe.html', context)
+
+def login(request):
+    return render(request, 'login.html')
+
+def register(request):
+    if request.method == "POST":
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = User.objects.filter(username=username)
+        if user.exists():
+            return render(request, 'register.html')
+        user = User.objects.create(
+            first_name = first_name ,
+            last_name = last_name,
+            username = username
+        )
+        user.set_password(password)
+        user.save()
+    return render(request, 'register.html')
