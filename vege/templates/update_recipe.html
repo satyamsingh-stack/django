@@ -23,43 +23,21 @@
                     {% csrf_token %}
                   <div class="mb-3">
                     <label for="recipeName" class="form-label">Recipe Name</label>
-                    <input type="text" name= "name" class="form-control" id="recipeName" placeholder="Enter recipe name">
+                    <input type="text" name= "name" value={{recipe.name}} class="form-control" id="recipeName" placeholder="Enter recipe name">
                   </div>
                   <div class="mb-3">
                     <label for="recipeDescription" class="form-label">Recipe Description</label>
-                    <textarea class="form-control"  name="description" id="recipeDescription" rows="4" placeholder="Enter recipe description"></textarea>
+                    <textarea class="form-control"  name="description" id="recipeDescription" rows="4" placeholder="Enter recipe description">{{recipe.description}}</textarea>
                   </div>
                   <div class="mb-3">
                     <label for="recipeImage" class="form-label">Recipe Image</label>
                     <input type="file" name="image" class="form-control" id="recipeImage">
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
                 </form>
               </div>
             </div>
           </div>
-         {{reciepes}} 
-         <table class="container">
-            <tr>
-              <th>S.No</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th> Image </th>
-              <th> Action </th>
-            </tr>
-            {% for receip in reciepes %}
-<tr>
-  <td>{{ forloop.counter }}</td>
-  <td>{{ receip.name }}</td>
-  <td>{{ receip.description }}</td>
-  <td>{{ receip.image }}</td>
-  <td>
-    <a href="/delete_rec/{{receip.id}}" class ="btn btn-danger"> Delete</a>
-    <a href="/update_recipe/{{receip.id}}" class ="btn btn-sucess"> Update </a>
-  </td>
-</tr>
-{% endfor %}
-</table>
         <script src="" async defer></script>
     </body>
 </html>
