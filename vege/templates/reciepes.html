@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+              <div class="col-6">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="recipeName" class="form-label">Recipe Name</label>
+                    <input type="text" name= "name" class="form-control" id="recipeName" placeholder="Enter recipe name">
+                  </div>
+                  <div class="mb-3">
+                    <label for="recipeDescription" class="form-label">Recipe Description</label>
+                    <textarea class="form-control"  name="description" id="recipeDescription" rows="4" placeholder="Enter recipe description"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="recipeImage" class="form-label">Recipe Image</label>
+                    <input type="file" name="image" class="form-control" id="recipeImage">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+         {{reciepes}} 
+         <table class="container">
+            <tr>
+              <th>S.No</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th> Image </th>
+              <th> Action </th>
+            </tr>
+            {% for receip in reciepes %}
+<tr>
+  <td>{{ forloop.counter }}</td>
+  <td>{{ receip.name }}</td>
+  <td>{{ receip.description }}</td>
+  <td>{{ receip.image }}</td>
+  <td>
+    <a href="/delete_rec/{{receip.id}}" class ="btn btn-danger"> Delete</a>
+  </td>
+</tr>
+{% endfor %}
+</table>
+        <script src="" async defer></script>
+    </body>
+</html>
