@@ -2,8 +2,11 @@ from django.shortcuts import redirect, render
 from .models import *
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib import messages  # Correct import for messages
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url='/login_page/')
 def reciepes(request):
     if request.method == "POST":
         data = request.POST
@@ -52,8 +55,27 @@ def update_recipe(request, id):
     context = {'recipe': queryset}
     return render(request, 'update_recipe.html', context)
 
-def login(request):
-    return render(request, 'login.html')
+def login_page(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Check if the username exists
+        if not User.objects.filter(username=username).exists():
+            messages.error(request, "Invalid username") 
+            return render(request, 'login_page.html')
+
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+        if user is None:
+            messages.error(request, "Invalid password") 
+            return render(request, 'login_page.html')
+        else:
+            # Log the user in
+            login(request, user)
+            return render(request, 'reciepes.html')  # Redirect to the recipes page
+
+    return render(request, 'login_page.html')
 
 def register(request):
     if request.method == "POST":
@@ -79,3 +101,7 @@ def register(request):
         return render(request, 'register.html')  # Redirect to login after successful registration
 
     return render(request, 'register.html')
+
+def logout_page(request):
+    logout(request)
+    return render(request, 'login_page.html')
